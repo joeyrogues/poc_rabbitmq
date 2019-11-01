@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-const { getInstance } = require('./lib')
+const { getInstance } = require('./lib/rabbit')
 
 const EXCHANGE = 'myexchange'
 const TOPIC = process.env.TOPIC || 'default'
