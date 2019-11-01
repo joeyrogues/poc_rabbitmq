@@ -1,29 +1,25 @@
 #!/usr/bin/env node
 
-const amqp = require('amqplib')
+const { getInstance } = require('./lib')
 const faker = require('faker')
 
-const RABBIT_URL = 'amqp://localhost'
 const EXCHANGE = 'myexchange'
+const TOPIC = 'something.b'
 
 const run = async () => {
-  const connection = await amqp.connect(RABBIT_URL)
+  const { produce, consume, disconnect } = await getInstance(EXCHANGE, TOPIC)
 
-  const channel = await connection.createChannel()
+  const msgObj = () => ({
+    name: faker.name.findName()
+  })
 
-  channel.assertExchange(EXCHANGE, 'topic', { durable: false })
+  produce('something.a', msgObj())
+  produce('something.a', msgObj())
+  produce('something.a', msgObj())
+  produce('something.a', msgObj())
+  produce('something.b', msgObj())
 
-  const send = (key) => {
-    const msgObj = { name: faker.name.findName() }
-    const msg = JSON.stringify(msgObj)
-    channel.publish(EXCHANGE, key, Buffer.from(msg))
-    console.log(" [x] Sent     %s: '%s'", key, msg)
-  }
-
-  send('something.a')
-  send('something.b')
-
-  setTimeout(() => connection.close(), 2000)
+  disconnect()
 }
 
 run()
