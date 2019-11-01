@@ -4,22 +4,16 @@ const { getInstance } = require('./lib')
 const faker = require('faker')
 
 const EXCHANGE = 'myexchange'
-const TOPIC = 'something.b'
+const TOPIC = process.env.TOPIC || 'default'
 
 const run = async () => {
-  const { produce, consume, disconnect } = await getInstance(EXCHANGE, TOPIC)
+  const { produce, consume } = await getInstance(EXCHANGE, TOPIC)
 
   const msgObj = () => ({
     name: faker.name.findName()
   })
 
-  produce('something.a', msgObj())
-  produce('something.a', msgObj())
-  produce('something.a', msgObj())
-  produce('something.a', msgObj())
-  produce('something.b', msgObj())
-
-  disconnect()
+  produce(TOPIC, msgObj())
 }
 
 run()

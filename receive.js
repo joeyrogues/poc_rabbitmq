@@ -3,7 +3,7 @@
 const { getInstance } = require('./lib')
 
 const EXCHANGE = 'myexchange'
-const TOPIC = 'something.a'
+const TOPIC = process.env.TOPIC || 'default'
 
 const run = async () => {
   const { produce, consume } = await getInstance(EXCHANGE, TOPIC)

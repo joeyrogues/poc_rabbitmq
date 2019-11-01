@@ -1,3 +1,4 @@
-receive_a: node receive_a.js
-receive_b: node receive_b.js
-send:    node send.js
+receive_a: TOPIC=something.a node receive.js
+receive_b: TOPIC=something.b node receive.js
+send_a:    TOPIC=something.a node send.js
+send_b:    TOPIC=something.b node send.js

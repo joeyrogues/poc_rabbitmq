@@ -29,14 +29,9 @@ const getInstance = async (exchange, topic) => {
     console.log(" [x] Send     (%s) %s", key, msg)
   }
 
-  const disconnect = () => {
-    setTimeout(() => connection.close(), 2000)
-  }
-
   return {
     produce,
-    consume,
-    disconnect
+    consume
   }
 }
 
